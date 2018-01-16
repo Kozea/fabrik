@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
 import signal
 
@@ -7,7 +7,7 @@ from gi.repository import Notify
 
 
 env.use_ssh_config = True
-env.hosts = ['geraldine', 'claire', 'cecile', 'fanny', 'melanie']
+env.hosts = ['marjorie', 'cecile', 'fanny', 'melanie', 'anne-laure', 'mathilde', 'axel', 'raphael']
 
 Notify.init('Fabrik')
 
