@@ -2,7 +2,7 @@
 
 set -e
 
-source $1
+source "$1"
 
 function read_news {
     echo "Read news"
@@ -46,13 +46,16 @@ function update {
 }
 
 function ssh_connect {
-    ssh -t -p $PORT $USER_P3000@$1$DOMAIN "$(typeset -f); $2"
+    ssh -t -p "$PORT" "$USER_P3000"@"$1""$DOMAIN" "$(typeset -f); $2"
 }
+
+today=$(date +%Y-%m-%d)
 
 IFS=" " read -ra SERVERS_NAME <<< "$SERVERS"
 for server_name in "${SERVERS_NAME[@]}"; do
-   echo "########### $server_name ###########"
-   screen -L -D -m -S $server_name bash -c "$(typeset); ssh_connect $server_name $2" &
-   $TERM_NEW $TERM_EXE_CMD="screen -r $server_name" $TERM_TITLE="$server_name"
+    logfile=$today".$server_name.log"
+    echo "########### $server_name ###########"
+    screen -L -D -Logfile "$logfile" -m -S "$server_name" bash -c "$(typeset); ssh_connect $server_name $2" &
+    $TERM_NEW "$TERM_EXE_CMD=screen -r $server_name" "$TERM_TITLE=$server_name"
 done
 
