@@ -2,8 +2,8 @@
 
 #==============================================================================
 # FILE : parallelator4000.sh
-# USAGE : maj.sh configfile
-# DESCRIPTION : Update computers
+# USAGE : parallelator4000.sh configfile
+# DESCRIPTION : Update
 # NOTES :
 #==============================================================================
 
