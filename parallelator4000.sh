@@ -13,7 +13,7 @@ source "$1"
 
 function update {
     echo "Updating..."
-    pacman -Syu --noconfirm || exit $?
+    pacman -Syu --noconfirm --noprogressbar || exit $?
     echo "Update done"
 }
 
@@ -37,7 +37,7 @@ function delete_folder {
 
 function ssh_connect {
     # $1 : ssh user, $2 : ssh port, $3 : hostname, $4 : function, $5 : function params
-    ssh -t -p "$2" "$1"@"$3" "$(typeset -f); $4"|| exit $?
+    ssh -oStrictHostKeyChecking=no -t -p "$2" "$1"@"$3" "$(typeset -f); $4"|| exit $?
 }
 
 today=$(date +%Y-%m-%d)
@@ -49,6 +49,7 @@ IFS=" " read -ra HOSTNAMES <<< "$HOSTNAMES_TO_UP"
 for hostname in "${HOSTNAMES[@]}"
 do
     (
+        echo "###### $hostname #####"
         logfile="$LOGS_DESTINATION/$today/$hostname"
         script -a -c "$(typeset -f); ssh_connect $SSH_USER $SSH_PORT $hostname $2 $OPTIONS" "$logfile"
     ) &
