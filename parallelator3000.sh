@@ -53,9 +53,9 @@ today=$(date +%Y-%m-%d)
 
 IFS=" " read -ra SERVERS_NAME <<< "$SERVERS"
 for server_name in "${SERVERS_NAME[@]}"; do
-    logfile=$today".$server_name.log"
+    logfile="logs/$today.$server_name.log"
     echo "########### $server_name ###########"
-    screen -L -D -Logfile "$logfile" -m -S "$server_name" bash -c "$(typeset); ssh_connect $server_name $2" &
+    screen -L -Logfile "$logfile" -d -m -S "$server_name" bash -c "$(typeset); ssh_connect $server_name $2"
     $TERM_NEW "$TERM_EXE_CMD=screen -r $server_name" "$TERM_TITLE=$server_name"
 done
 
